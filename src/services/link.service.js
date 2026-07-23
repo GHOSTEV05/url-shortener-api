@@ -33,7 +33,18 @@ const redirect = async (shortCode) => {
     return link.originalUrl;
 };
 
+const getStats = async (shortCode) => {
+    const link = await findByShortCode(shortCode);
+
+    if (!link) {
+        throw new AppError("Short link not found", 404);
+    }
+
+    return link;
+};
+
 module.exports = {
     create,
     redirect,
+    getStats,
 };

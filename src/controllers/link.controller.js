@@ -3,6 +3,7 @@ const { createLinkSchema } = require("../validators/link.validator");
 const {
     create,
     redirect,
+    getStats,
 } = require("../services/link.service");
 
 const createShortLink = async (req, res, next) => {
@@ -37,7 +38,30 @@ const redirectToOriginalUrl = async (req, res, next) => {
     }
 };
 
+const getLinkStats = async (req, res, next) => {
+    try {
+        const { shortCode } = req.params;
+
+        const link = await getStats(shortCode);
+
+        res.status(200).json({
+            success: true,
+            data: {
+                originalUrl: link.originalUrl,
+                shortCode: link.shortCode,
+                shortUrl: `${req.protocol}://${req.get("host")}/${link.shortCode}`,
+                clicks: link.clicks,
+                createdAt: link.createdAt,
+                lastVisitedAt: link.lastVisitedAt,
+            },
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     createShortLink,
     redirectToOriginalUrl,
+    getLinkStats,
 };
