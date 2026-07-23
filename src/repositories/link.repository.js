@@ -36,9 +36,18 @@ const getLinks = () => {
     });
 };
 
+const deleteLink = (shortCode) => {
+    return prisma.link.delete({
+        where: {
+            shortCode,
+        },
+    });
+};
+
 module.exports = {
     createLink,
     findByShortCode,
     updateLinkVisit,
     getLinks,
+    deleteLink,
 };

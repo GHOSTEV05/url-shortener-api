@@ -5,6 +5,7 @@ const {
     redirect,
     getStats,
     getAllLinks,
+    remove,
 } = require("../services/link.service");
 
 const createShortLink = async (req, res, next) => {
@@ -83,9 +84,25 @@ const getLinks = async (req, res, next) => {
     }
 };
 
+const deleteShortLink = async (req, res, next) => {
+    try {
+        const { shortCode } = req.params;
+
+        await remove(shortCode);
+
+        res.status(200).json({
+            success: true,
+            message: "Link deleted successfully",
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     createShortLink,
     redirectToOriginalUrl,
     getLinkStats,
     getLinks,
+    deleteShortLink,
 };

@@ -7,6 +7,7 @@ const {
     findByShortCode,
     updateLinkVisit,
     getLinks,
+    deleteLink,
 } = require("../repositories/link.repository");
 
 const create = async (url) => {
@@ -48,9 +49,20 @@ const getAllLinks = async () => {
     return getLinks();
 };
 
+const remove = async (shortCode) => {
+    const link = await findByShortCode(shortCode);
+
+    if (!link) {
+        throw new AppError("Short link not found", 404);
+    }
+
+    await deleteLink(shortCode);
+};
+
 module.exports = {
     create,
     redirect,
     getStats,
     getAllLinks,
+    remove,
 };
