@@ -6,6 +6,7 @@ const {
     createLink,
     findByShortCode,
     updateLinkVisit,
+    getLinks,
 } = require("../repositories/link.repository");
 
 const create = async (url) => {
@@ -43,8 +44,13 @@ const getStats = async (shortCode) => {
     return link;
 };
 
+const getAllLinks = async () => {
+    return getLinks();
+};
+
 module.exports = {
     create,
     redirect,
     getStats,
+    getAllLinks,
 };

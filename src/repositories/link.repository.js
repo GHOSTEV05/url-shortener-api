@@ -28,8 +28,17 @@ const updateLinkVisit = (id) => {
     });
 };
 
+const getLinks = () => {
+    return prisma.link.findMany({
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+};
+
 module.exports = {
     createLink,
     findByShortCode,
     updateLinkVisit,
+    getLinks,
 };
