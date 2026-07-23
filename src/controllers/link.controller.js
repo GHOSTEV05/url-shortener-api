@@ -1,6 +1,10 @@
 const { createLinkSchema } = require("../validators/link.validator");
 
 const {
+    listLinksQuerySchema,
+} = require("../validators/linkQuery.validator");
+
+const {
     create,
     redirect,
     getStats,
@@ -64,9 +68,7 @@ const getLinkStats = async (req, res, next) => {
 
 const getLinks = async (req, res, next) => {
     try {
-        const page = Number(req.query.page) || 1;
-        const limit = Number(req.query.limit) || 10;
-        const search = req.query.search || "";
+        const { page, limit, search } = listLinksQuerySchema.parse(req.query);
 
         const { links, total } = await getAllLinks(
             page,
