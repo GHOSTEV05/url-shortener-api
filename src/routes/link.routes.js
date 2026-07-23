@@ -43,6 +43,24 @@ router.post("/", createShortLink);
  *     summary: Get all shortened links
  *     tags:
  *       - Links
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Number of items per page
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search by original URL
  *     responses:
  *       200:
  *         description: List of shortened links
