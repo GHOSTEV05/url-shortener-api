@@ -66,8 +66,13 @@ const getLinks = async (req, res, next) => {
     try {
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 10;
+        const search = req.query.search || "";
 
-        const { links, total } = await getAllLinks(page, limit);
+        const { links, total } = await getAllLinks(
+            page,
+            limit,
+            search
+        );
 
         const data = links.map((link) => ({
             originalUrl: link.originalUrl,
@@ -86,6 +91,7 @@ const getLinks = async (req, res, next) => {
                 limit,
                 total,
                 totalPages: Math.ceil(total / limit),
+                search,
             },
         });
     } catch (error) {

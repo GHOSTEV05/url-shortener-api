@@ -46,12 +46,12 @@ const getStats = async (shortCode) => {
     return link;
 };
 
-const getAllLinks = async (page, limit) => {
+const getAllLinks = async (page, limit, search) => {
     const skip = (page - 1) * limit;
 
     const [links, total] = await Promise.all([
-        getLinks(skip, limit),
-        countLinks(),
+        getLinks(skip, limit, search),
+        countLinks(search),
     ]);
 
     return {

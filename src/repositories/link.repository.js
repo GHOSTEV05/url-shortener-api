@@ -28,8 +28,16 @@ const updateLinkVisit = (id) => {
     });
 };
 
-const getLinks = (skip, take) => {
+const getLinks = (skip, take, search) => {
     return prisma.link.findMany({
+        where: search
+            ? {
+                originalUrl: {
+                    contains: search,
+                    mode: "insensitive",
+                },
+            }
+            : undefined,
         skip,
         take,
         orderBy: {
@@ -38,8 +46,17 @@ const getLinks = (skip, take) => {
     });
 };
 
-const countLinks = () => {
-    return prisma.link.count();
+const countLinks = (search) => {
+    return prisma.link.count({
+        where: search
+            ? {
+                originalUrl: {
+                    contains: search,
+                    mode: "insensitive",
+                },
+            }
+            : undefined,
+    });
 };
 
 const deleteLink = (shortCode) => {
