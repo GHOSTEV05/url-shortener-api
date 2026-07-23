@@ -1,6 +1,6 @@
 const { nanoid } = require("nanoid");
 
-const AppError = require("../utils/appError");
+const AppError = require("../utils/AppError");
 
 const {
     createLink,
