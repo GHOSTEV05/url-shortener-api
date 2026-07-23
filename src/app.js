@@ -16,6 +16,12 @@ app.get("/", (req, res) => {
   });
 });
 
+const {
+  redirectToOriginalUrl,
+} = require("./controllers/link.controller");
+
+app.get("/:shortCode", redirectToOriginalUrl);
+
 app.use("/api/v1", routes);
 app.use(notFound);
 app.use(errorHandler);
