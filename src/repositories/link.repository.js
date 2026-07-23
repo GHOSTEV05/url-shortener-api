@@ -28,12 +28,18 @@ const updateLinkVisit = (id) => {
     });
 };
 
-const getLinks = () => {
+const getLinks = (skip, take) => {
     return prisma.link.findMany({
+        skip,
+        take,
         orderBy: {
             createdAt: "desc",
         },
     });
+};
+
+const countLinks = () => {
+    return prisma.link.count();
 };
 
 const deleteLink = (shortCode) => {
@@ -50,4 +56,5 @@ module.exports = {
     updateLinkVisit,
     getLinks,
     deleteLink,
+    countLinks,
 };

@@ -8,6 +8,7 @@ const {
     updateLinkVisit,
     getLinks,
     deleteLink,
+    countLinks,
 } = require("../repositories/link.repository");
 
 const create = async (url) => {
@@ -45,8 +46,18 @@ const getStats = async (shortCode) => {
     return link;
 };
 
-const getAllLinks = async () => {
-    return getLinks();
+const getAllLinks = async (page, limit) => {
+    const skip = (page - 1) * limit;
+
+    const [links, total] = await Promise.all([
+        getLinks(skip, limit),
+        countLinks(),
+    ]);
+
+    return {
+        links,
+        total,
+    };
 };
 
 const remove = async (shortCode) => {

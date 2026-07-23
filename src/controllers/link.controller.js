@@ -64,7 +64,10 @@ const getLinkStats = async (req, res, next) => {
 
 const getLinks = async (req, res, next) => {
     try {
-        const links = await getAllLinks();
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 10;
+
+        const { links, total } = await getAllLinks(page, limit);
 
         const data = links.map((link) => ({
             originalUrl: link.originalUrl,
@@ -78,6 +81,12 @@ const getLinks = async (req, res, next) => {
         res.status(200).json({
             success: true,
             data,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages: Math.ceil(total / limit),
+            },
         });
     } catch (error) {
         next(error);
